@@ -1,3 +1,6 @@
+from src.astt import (
+    ASTNode, Number, String, Identifier, BinOp, Assign, Print
+)
 class Parser:
     def __init__(self, tokens):
         self.tokens = tokens
@@ -10,16 +13,37 @@ class Parser:
         else:
             self.current_token = None
 
+    # def parse(self):
+    #     statements = []
+    #     while self.current_token:
+    #         if self.current_token[0] == 'PRINT':
+    #             statements.append(self.parse_print())
+    #         elif self.current_token[0] == 'IDENTIFIER' and self.tokens[0][1] == '=':
+    #             statements.append(self.parse_assignment())
+    #         else:
+    #             raise SyntaxError(f"Unexpected token: {self.current_token}")
+    #     return statements
+
     def parse(self):
         statements = []
         while self.current_token:
             if self.current_token[0] == 'PRINT':
                 statements.append(self.parse_print())
-            elif self.current_token[0] == 'IDENTIFIER' and self.tokens[0][1] == '=':
-                statements.append(self.parse_assignment())
+            elif self.current_token[0] == 'VAR':
+                statements.append(self.parse_var_declaration())
             else:
                 raise SyntaxError(f"Unexpected token: {self.current_token}")
         return statements
+
+    def parse_var_declaration(self):
+        self.next_token()  # Skip 'var'
+        identifier = Identifier(self.current_token[1])  # Get the variable name
+        self.next_token()  # Skip the identifier
+        if self.current_token[1] != '=':
+            raise SyntaxError("Expected '=' after variable name")
+        self.next_token()  # Skip '='
+        value = self.parse_expression()  # Parse the expression after '='
+        return Assign(identifier, value)
 
     def parse_print(self):
         self.next_token()  # Skip 'print'

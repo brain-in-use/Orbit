@@ -4,10 +4,11 @@ import re
 TOKENS = [
     ('NUMBER', r'\d+'),                     # Integers
     ('STRING', r'"[^"]*"'),                 # Strings
+    ('PRINT', r'print'),                    # Print keyword
+    ('VAR', r'var'),                        # Variable declaration keyword
     ('IDENTIFIER', r'[a-zA-Z_]\w*'),        # Variable names
     ('OPERATOR', r'[+\-*/]'),               # Arithmetic operators
     ('ASSIGN', r'='),                       # Assignment operator
-    ('PRINT', r'print'),                    # Print keyword
     ('IF', r'if'),                          # If keyword
     ('LBRACE', r'\{'),                      # Left brace
     ('RBRACE', r'\}'),                      # Right brace
