@@ -1,4 +1,8 @@
-var x = 10
-var y = x + 20
-print y
-print "Hello, Orbit!Made By Akash"
+var a = 5
+var b = 10
+if a + b == 15 {
+    print "Sum is 15"
+}
+else{
+    print "asd"
+}

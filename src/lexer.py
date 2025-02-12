@@ -2,6 +2,11 @@ import re
 
 # Token types
 TOKENS = [
+    ('IF', r'if'),                          # if keyword
+    ('ELSE', r'else'),                      # else keyword
+    ('COMPARISON_OP', r'==|!=|<=|>=|<|>'),  # Comparison operators
+    ('LBRACE', r'\{'),                      # Left brace
+    ('RBRACE', r'\}'),                      # Right brace
     ('NUMBER', r'\d+'),                     # Integers
     ('STRING', r'"[^"]*"'),                 # Strings
     ('PRINT', r'print'),                    # Print keyword

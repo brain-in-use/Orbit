@@ -1,5 +1,5 @@
 from src.astt import (
-    ASTNode, Number, String, Identifier, BinOp, Assign, Print
+    ASTNode, Number, String, Identifier, BinOp, Assign, Print, IfElse
 )
 class Parser:
     def __init__(self, tokens):
@@ -24,6 +24,17 @@ class Parser:
     #             raise SyntaxError(f"Unexpected token: {self.current_token}")
     #     return statements
 
+    # def parse(self):
+    #     statements = []
+    #     while self.current_token:
+    #         if self.current_token[0] == 'PRINT':
+    #             statements.append(self.parse_print())
+    #         elif self.current_token[0] == 'VAR':
+    #             statements.append(self.parse_var_declaration())
+    #         else:
+    #             raise SyntaxError(f"Unexpected token: {self.current_token}")
+    #     return statements
+
     def parse(self):
         statements = []
         while self.current_token:
@@ -31,6 +42,8 @@ class Parser:
                 statements.append(self.parse_print())
             elif self.current_token[0] == 'VAR':
                 statements.append(self.parse_var_declaration())
+            elif self.current_token[0] == 'IF':
+                statements.append(self.parse_if_else())
             else:
                 raise SyntaxError(f"Unexpected token: {self.current_token}")
         return statements
@@ -79,3 +92,46 @@ class Parser:
             return Identifier(value)
         else:
             raise SyntaxError(f"Unexpected token: {self.current_token}")
+        
+    
+    def parse_if_else(self):
+        self.next_token()  # Skip 'if'
+        condition = self.parse_condition()
+        body = self.parse_block()
+        else_body = None
+
+        # Check for 'else'
+        if self.current_token and self.current_token[0] == 'ELSE':
+            self.next_token()  # Skip 'else'
+            else_body = self.parse_block()
+
+        return IfElse(condition, body, else_body)
+
+    def parse_condition(self):
+        # Parse a comparison (e.g., x > 5)
+        left = self.parse_expression()
+        if self.current_token and self.current_token[0] == 'COMPARISON_OP':
+            op = self.current_token[1]
+            self.next_token()
+            right = self.parse_expression()
+            return BinOp(left, op, right)
+        else:
+            raise SyntaxError("Expected comparison operator")
+
+    def parse_block(self):
+        # Parse statements inside { ... }
+        if self.current_token[1] != '{':
+            raise SyntaxError("Expected '{'")
+        self.next_token()  # Skip '{'
+        block = []
+        while self.current_token and self.current_token[1] != '}':
+            if self.current_token[0] == 'IF':
+                block.append(self.parse_if_else())
+            elif self.current_token[0] == 'PRINT':
+                block.append(self.parse_print())
+            elif self.current_token[0] == 'VAR':
+                block.append(self.parse_var_declaration())
+            else:
+                raise SyntaxError(f"Unexpected token: {self.current_token}")
+        self.next_token()  # Skip '}'
+        return block

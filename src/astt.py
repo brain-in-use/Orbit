@@ -27,3 +27,9 @@ class Assign(ASTNode):
 class Print(ASTNode):
     def __init__(self, expression):
         self.expression = expression
+
+class IfElse(ASTNode):
+    def __init__(self, condition, body, else_body=None):
+        self.condition = condition
+        self.body = body          # List of AST nodes (statements in the if block)
+        self.else_body = else_body  # List of AST nodes (statements in the else block)

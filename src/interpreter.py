@@ -1,5 +1,5 @@
 from src.astt import (
-    Number, String, Identifier, BinOp, Assign, Print
+    Number, String, Identifier, BinOp, Assign, Print, IfElse
 )
 
 class Interpreter:
@@ -28,6 +28,36 @@ class Interpreter:
             self.variables[node.identifier.name] = self.visit(node.value)
         elif isinstance(node, Print):
             print(self.visit(node.expression))
+
+        elif isinstance(node, IfElse):
+            condition = self.visit(node.condition)
+            if condition:
+                for stmt in node.body:
+                    self.visit(stmt)
+            elif node.else_body:
+                for stmt in node.else_body:
+                    self.visit(stmt)
+
+        elif isinstance(node, BinOp):
+            left = self.visit(node.left)
+            right = self.visit(node.right)
+            if node.op == '+':
+                return left + right
+            elif node.op == '-':
+                return left - right
+            elif node.op == '*':
+                return left * right
+            elif node.op == '/':
+                return left / right
+            elif node.op == '>':
+                return left > right
+            elif node.op == '<':
+                return left < right
+            elif node.op == '==':
+                return left == right
+            else:
+                raise ValueError(f"Unknown operator: {node.op}")
+
 
     def interpret(self, ast):
         for node in ast:
