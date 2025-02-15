@@ -14,7 +14,7 @@ TOKENS = [
     ('IDENTIFIER', r'[a-zA-Z_]\w*'),        # Variable names
     ('OPERATOR', r'[+\-*/]'),               # Arithmetic operators
     ('ASSIGN', r'='),                       # Assignment operator
-    ('IF', r'if'),                          # If keyword
+    # ('IF', r'if'),                          # If keyword
     ('LBRACE', r'\{'),                      # Left brace
     ('RBRACE', r'\}'),                      # Right brace
     ('LPAREN', r'\('),                      # Left parenthesis
