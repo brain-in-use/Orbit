@@ -14,7 +14,7 @@ Orbit is a powerful and flexible programming language designed for modern softwa
 
 To install Orbit, follow these steps:
 
-1. Download the latest version from the [official website](https://example.com).
+1. Download the latest version from this github repo.
 2. Run the installer and follow the on-screen instructions.
 3. Verify the installation by running `orbit --version` in your terminal.
 
@@ -42,6 +42,17 @@ For detailed documentation and tutorials, visit the [Orbit documentation](https:
 ## Contributing
 
 We welcome contributions from the community. Please read our [contributing guidelines](https://example.com/contributing) to get started.
+
+## Contribution Guidelines
+
+1. Fork the repository.
+2. Create a new branch (`git checkout -b feature-branch`).
+3. Make your changes.
+4. Commit your changes (`git commit -m 'Add some feature'`).
+5. Push to the branch (`git push origin feature-branch`).
+6. Open a pull request.
+
+Please ensure your code follows the project's coding standards and includes appropriate tests.
 
 ## License
 
